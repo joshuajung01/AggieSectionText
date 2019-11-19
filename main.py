@@ -28,7 +28,7 @@ def findDeleteClassInMessage(messages):
 def deleteMessage(messages, course):
     for message in messages:
         if course in message.body:
-            client.messages(message.sid).delete()
+            client.messages(sid=message.sid).delete()
 
 if __name__ == '__main__':
     accountSID = os.environ["accountSID"]
