@@ -18,7 +18,7 @@ def findDeleteClassInMessage(messages):
     courses = []
     for message in messages:
         courseArr = message.body.split(" ")
-        if courseArr[0] == "Remove":
+        if courseArr[0] == "Remove" and len(courseArr)==4:
             course = str(courseArr[1])+" "+str(courseArr[2])+" "+str(courseArr[3])
             courses.append(course)
     return courses
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     seungjehpn = os.environ["seungjehpn"]
 
     client = Client(accountSID, auth_token)
-    pn = [joshuapn, seungjehpn,]
+    pn = [joshuapn, seungjehpn]
     for num in pn:
         messages = client.messages.list(from_= num, limit=200)
 
