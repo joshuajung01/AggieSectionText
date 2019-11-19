@@ -15,12 +15,13 @@ def addMessages(messages):
     return desiredClasses
 
 def findDeleteClassInMessage(messages):
+    courses = []
     for message in messages:
         courseArr = message.body.split(" ")
         if courseArr[0] == "Remove":
             course = str(courseArr[1])+" "+str(courseArr[2])+" "+str(courseArr[3])
-            return course
-    return "NONE TO DELETE"
+            courses.append(course)
+    return courses
 
 
 
@@ -40,11 +41,12 @@ for num in pn:
     messages = client.messages.list(from_= num, limit=200)
 
     deletedClass = findDeleteClassInMessage(messages)
-    if deletedClass != "NONE TO DELETE":
-        deleteMessage(messages, deletedClass)
-        client.messages.create(to=num,
-                               from_="+13343104801",
-                               body="No longer searching for " + deletedClass)
+    if len(deletedClass) != 0:
+        for course in deletedClass:
+            deleteMessage(messages, course)
+            client.messages.create(to=num,
+                                   from_="+13343104801",
+                                   body="No longer searching for " + deletedClass)
 
     desiredClasses = addMessages(messages)
     notifiedClasses = []
