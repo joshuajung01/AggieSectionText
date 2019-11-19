@@ -30,40 +30,43 @@ def deleteMessage(messages, course):
         if course in message.body:
             client.messages(message.sid).delete()
 
-accountSID = os.environ["accountSID"]
-auth_token = os.environ["auth_token"]
-joshuapn = os.environ["joshuapn"]
-seungjehpn = os.environ["seungjehpn"]
+if __name__ == '__main__':
+    accountSID = os.environ["accountSID"]
+    auth_token = os.environ["auth_token"]
+    joshuapn = os.environ["joshuapn"]
+    seungjehpn = os.environ["seungjehpn"]
 
-client = Client(accountSID, auth_token)
-pn = [joshuapn, seungjehpn,]
-for num in pn:
-    messages = client.messages.list(from_= num, limit=200)
+    client = Client(accountSID, auth_token)
+    pn = [joshuapn, seungjehpn,]
+    for num in pn:
+        messages = client.messages.list(from_= num, limit=200)
 
-    deletedClass = findDeleteClassInMessage(messages)
-    if len(deletedClass) != 0:
-        for course in deletedClass:
-            deleteMessage(messages, course)
+        deletedClasses = findDeleteClassInMessage(messages)
+        if len(deletedClasses) != 0:
+            for course in deletedClasses:
+                deleteMessage(messages, course)
 
-    deletedNames = ""
-    for item in deletedClass:
-        deletedNames +="\n"+item
-    client.messages.create(to=num,
-                           from_="+13343104801",
-                           body="No longer searching for " + deletedNames)
+        deletedNames = ""
+        for item in deletedClasses:
+            deletedNames +="\n"+str(item)
 
-    desiredClasses = addMessages(messages)
-    notifiedClasses = []
+        if len(deletedNames)!=0:
+            client.messages.create(to=num,
+                                   from_="+13343104801",
+                                   body="No longer searching for " + deletedNames)
 
-    for mess in desiredClasses:
-        if search(mess.dept, mess.num, mess.section):
-            notifiedClasses.append(mess.printName())
+        desiredClasses = addMessages(messages)
+        notifiedClasses = []
 
-    if len(notifiedClasses) != 0:
-        body = ""
-        for course in notifiedClasses:
-            body += "\n"+course
-        client.messages.create(to=num,
-                               from_="+13343104801",
-                               body="These Classes are open for registration: "+body)
+        for mess in desiredClasses:
+            if search(mess.dept, mess.num, mess.section):
+                notifiedClasses.append(mess.printName())
+
+        if len(notifiedClasses) != 0:
+            body = ""
+            for course in notifiedClasses:
+                body += "\n"+course
+            client.messages.create(to=num,
+                                   from_="+13343104801",
+                                   body="These Classes are open for registration: "+body)
 
