@@ -44,9 +44,13 @@ for num in pn:
     if len(deletedClass) != 0:
         for course in deletedClass:
             deleteMessage(messages, course)
-            client.messages.create(to=num,
-                                   from_="+13343104801",
-                                   body="No longer searching for " + deletedClass)
+
+    deletedNames = ""
+    for item in deletedClass:
+        deletedNames +="\n"+item
+    client.messages.create(to=num,
+                           from_="+13343104801",
+                           body="No longer searching for " + deletedNames)
 
     desiredClasses = addMessages(messages)
     notifiedClasses = []
