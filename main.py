@@ -55,6 +55,9 @@ if __name__ == '__main__':
                                    from_="+13343104801",
                                    body="No longer searching for " + deletedNames)
 
+    for num in pn:
+        messages = client.messages.list(from_=num, limit=200)
+
         desiredClasses = addMessages(messages)
         notifiedClasses = []
 
