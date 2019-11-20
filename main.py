@@ -35,9 +35,10 @@ if __name__ == '__main__':
     auth_token = os.environ["auth_token"]
     joshuapn = os.environ["joshuapn"]
     seungjehpn = os.environ["seungjehpn"]
+    kushpn = os.environ["kushpn"]
 
     client = Client(accountSID, auth_token)
-    pn = [joshuapn, seungjehpn]
+    pn = [joshuapn, seungjehpn, kushpn,]
     for num in pn:
         messages = client.messages.list(from_= num, limit=200)
 
