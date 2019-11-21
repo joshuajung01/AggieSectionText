@@ -33,15 +33,18 @@ def deleteMessage(messages, course):
 if __name__ == '__main__':
     accountSID = os.environ["accountSID"]
     auth_token = os.environ["auth_token"]
+
     joshuapn = os.environ["joshuapn"]
     seungjehpn = os.environ["seungjehpn"]
     kushpn = os.environ["kushpn"]
     jennypn = os.environ["jennypn"]
     nathanpn = os.environ["nathanpn"]
     kaylinhpn = os.environ["kaylinhpn"]
+    mihiranpn = os.environ["mihiranpn"]
 
     client = Client(accountSID, auth_token)
-    pn = [joshuapn, seungjehpn, kushpn, jennypn, nathanpn, kaylinhpn]
+    pn = [joshuapn, seungjehpn, kushpn, jennypn, nathanpn, kaylinhpn, mihiranpn]
+
     for num in pn:
         messages = client.messages.list(from_= num, limit=200)
 
